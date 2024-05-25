@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import fs from 'fs';
 import pkg from 'pg';
+import bcrypt from 'bcrypt';
 
 import userRouter from './endpoints/users.js';
 import orderRouter from './endpoints/orders.js';

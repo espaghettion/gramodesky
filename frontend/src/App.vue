@@ -13,9 +13,7 @@ import { RouterLink, RouterView } from 'vue-router'
           <RouterLink to="/">GRAMODESKY.CZ</RouterLink>
         </article>
         <article>
-          <input type="text">
-          <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-          <a href="#"><i class="fa-regular fa-user"></i></a>
+          <RouterLink to="/login"><i class="fa-regular fa-user"></i></RouterLink>
           <a href="#"><i class="fa-regular fa-heart"></i></a>
           <RouterLink to="/cart"><i class="fa-solid fa-cart-shopping"></i></RouterLink>
         </article>

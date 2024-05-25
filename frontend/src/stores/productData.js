@@ -31,5 +31,5 @@ export const useProductStore = defineStore('productdata', () => {
   }*/
 
 
-  return { products, product, loadProducts, loadProduct, createProduct }
+  return { products, product, loadProducts, loadProduct }
 })

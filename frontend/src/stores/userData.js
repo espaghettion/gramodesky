@@ -10,17 +10,20 @@ export const useUserStore = defineStore('userdata', () => {
       .then(data => users.value = data)
       .catch(err => console.log(err.message))
   }
+
   function loadUser(){
     fetch('http://localhost:3000/users/' + (id))
       .then(response => response.json())
       .then(data => users.value = data)
       .catch(err => console.log(err.message))
   }
-  function addUser(){
+
+  function addUser(username, password){
     const user = {
       "username": username,
+      "password": password
     }
-    fetch("http://localhost:3000/users/" + (id), {
+    fetch("http://localhost:3000/users", {
       headers: {
           "Content-Type": "application/json"
       },
@@ -29,6 +32,22 @@ export const useUserStore = defineStore('userdata', () => {
       body: JSON.stringify(user)
     })
   }
+
+  function authenticateUser(username, password){
+    const user = {
+      "username": username,
+      "password": password
+    }
+    fetch("http://localhost:3000/users/login", {
+      headers: {
+          "Content-Type": "application/json"
+      },
+      mode: "cors",
+      method: "POST",
+      body: JSON.stringify(user)
+    })
+  }
+
   function patchUser(username, id){
     const user = {
       "username": username,
@@ -43,5 +62,5 @@ export const useUserStore = defineStore('userdata', () => {
     })
   }
 
-  return { users, loadUsers, loadUser, addUser, patchUser, }
+  return { users, loadUsers, loadUser, addUser, authenticateUser, patchUser }
 })

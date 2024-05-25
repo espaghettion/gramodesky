@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import AboutView from '../views/AboutView.vue'
-import ProductView from '../views/ProductView.vue'
-import CartView from '../views/CartView.vue'
+import HomeView from '@/views/HomeView.vue'
+import ProductView from '@/views/ProductView.vue'
+import CartView from '@/views/CartView.vue'
+import LoginView from '@/views/LoginView.vue'
+import RegisterView from '@/views/RegisterView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +23,16 @@ const router = createRouter({
       name: 'cart',
       component: CartView
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterView
+    },
     /*{
       path: '/albums',
       name: 'albums',
@@ -36,27 +47,7 @@ const router = createRouter({
       path: '/genres',
       name: 'genres',
       component: GenresView
-    },
-    {
-      path: '/publishers',
-      name: 'publishers',
-      component: PublishersView
-    },
-    {
-      path: '/merch',
-      name: 'merch',
-      component: MerchView
-    },
-    {
-      path: '/audiotech',
-      name: 'audiotech',
-      component: AudiotechView
-    },
-    {
-      path: '/brands',
-      name: 'brands',
-      component: BrandsView
-    },*/
+    }*/
   ]
 })
 
