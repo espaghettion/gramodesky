@@ -24,7 +24,7 @@ router.get("/:id", async (req, res) => {
   });
 router.post("/", async (req, res) => {
     try {
-      const sql = `INSERT INTO "product" ("name", "artist_id", "genre_id", "available", "cost") VALUES ($1::text, $2, $3, $4, $5)`;
+      const sql = `INSERT INTO "product" ("name", "available", "cost", "type") VALUES ($1::text, $2, $3, $4)`;
       const result = await client.query(sql, [  ]);
       res.send(result.rows);
     } catch (err) {

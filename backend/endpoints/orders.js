@@ -24,8 +24,13 @@ router.get("/:id", async (req, res) => {
   });
 router.post("/", async (req, res) => {
     try {
-      const sql = `INSERT INTO "order" ("user_id", "cost") VALUES ($1, $2)`;
-      const result = await client.query(sql, [ req.body.user_id, req.body.cost ]);
+      const createOrder = `INSERT INTO "order" ("user_id", "cost", "state") VALUES ($1, $2, 'ordered') RETURNING id`;
+      let result = await client.query(createOrder, [ req.body.user_id, req.body.cost ]);
+      const orderId = result.rows[0].id;
+      for(let i = 0; i < req.body.items.length; i++){
+        let orderItems = `INSERT INTO "order_items" ("order_id", "product_id") VALUES ($1, $2)`;
+        result += await client.query(orderItems, [ orderId, req.body.items[i].id ]);
+      }
       res.send(result.rows);
     } catch (err) {
       console.error(err);

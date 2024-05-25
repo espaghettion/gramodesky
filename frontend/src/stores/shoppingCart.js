@@ -21,6 +21,7 @@ export const useCartStore = defineStore('cartdata', () => {
     const order = {
       "user_id": 1,
       "cost": cost.value,
+      "items": items.value
     }
     fetch("http://localhost:3000/orders", {
       headers: {

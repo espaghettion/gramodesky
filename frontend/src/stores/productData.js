@@ -17,7 +17,19 @@ export const useProductStore = defineStore('productdata', () => {
       .then(data => product.value = data)
       .catch(err => console.log(err.message))
   }
+  /*function createProduct(){
+    const product = {
+    }
+    fetch("http://localhost:3000/products", {
+      headers: {
+          "Content-Type": "application/json"
+      },
+      mode: "cors",
+      method: "POST",
+      body: JSON.stringify(product)
+    })
+  }*/
 
 
-  return { products, product, loadProducts, loadProduct }
+  return { products, product, loadProducts, loadProduct, createProduct }
 })
