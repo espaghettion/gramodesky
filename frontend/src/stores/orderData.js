@@ -11,5 +11,29 @@ export const useOrderStore = defineStore('orderdata', () => {
       .catch(err => console.log(err.message))
   }
 
-  return { orders, loadOrders }
+  function patchOrder(state, id){
+    const order = {
+      "state": state
+    }
+    fetch("http://localhost:3000/orders/" + (id), {
+      headers: {
+          "Content-Type": "application/json"
+      },
+      mode: "cors",
+      method: "PATCH",
+      body: JSON.stringify(order)
+    })
+  }
+
+  function deleteOrder(id){
+    fetch("http://localhost:3000/orders/" + (id), {
+      headers: {
+          "Content-Type": "application/json"
+      },
+      mode: "cors",
+      method: "DELETE",
+    })
+  }
+
+  return { orders, loadOrders, patchOrder, deleteOrder }
 })

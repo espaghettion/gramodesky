@@ -11,5 +11,43 @@ export const useGenreStore = defineStore('genredata', () => {
       .catch(err => console.log(err.message))
   }
 
-  return { genres, loadGenres }
+  function addGenre(name){
+    const genre = {
+      "name": name
+    }
+    fetch("http://localhost:3000/genres", {
+      headers: {
+          "Content-Type": "application/json"
+      },
+      mode: "cors",
+      method: "POST",
+      body: JSON.stringify(genre)
+    })
+  }
+
+  function patchGenre(name, id){
+    const genre = {
+      "name": name
+    }
+    fetch("http://localhost:3000/genres/" + (id), {
+      headers: {
+          "Content-Type": "application/json"
+      },
+      mode: "cors",
+      method: "PATCH",
+      body: JSON.stringify(genre)
+    })
+  }
+
+  function deleteGenre(id){
+    fetch("http://localhost:3000/genres/" + (id), {
+      headers: {
+          "Content-Type": "application/json"
+      },
+      mode: "cors",
+      method: "DELETE",
+    })
+  }
+
+  return { genres, loadGenres, addGenre, patchGenre, deleteGenre }
 })

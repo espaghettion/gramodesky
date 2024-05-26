@@ -2,8 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import ProductView from '@/views/ProductView.vue'
 import CartView from '@/views/CartView.vue'
-import LoginView from '@/views/LoginView.vue'
+import UserView from '@/views/UserView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import AlbumsView from '@/views/AlbumsView.vue'
+import GenresView from '@/views/GenresView.vue'
+import ArtistsView from '@/views/ArtistsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,16 +27,16 @@ const router = createRouter({
       component: CartView
     },
     {
-      path: '/login',
-      name: 'login',
-      component: LoginView
+      path: '/user',
+      name: 'user',
+      component: UserView
     },
     {
       path: '/register',
       name: 'register',
       component: RegisterView
     },
-    /*{
+    {
       path: '/albums',
       name: 'albums',
       component: AlbumsView
@@ -47,7 +50,7 @@ const router = createRouter({
       path: '/genres',
       name: 'genres',
       component: GenresView
-    }*/
+    }
   ]
 })
 

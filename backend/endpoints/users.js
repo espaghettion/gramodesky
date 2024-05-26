@@ -47,14 +47,14 @@ router.post("/", async (req, res) => {
     }
     try {
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      const sql = `INSERT INTO "user" ("username", "password") VALUES ($1::text, $2::text)`;
-      const result = await client.query(sql, [ req.body.username, hashedPassword ]);
+      const sql = `INSERT INTO "user" ("name", "username", "password") VALUES ($1::text, $2::text, $3::text)`;
+      const result = await client.query(sql, [ req.body.name, req.body.username, hashedPassword ]);
       res.send(result.rows);
     } catch (err) {
       console.error(err);
       res.status(500).send('Internal Server Error');
     }
-  });
+});
 
 
 router.post("/login", async (req, res) => {
@@ -65,10 +65,10 @@ router.post("/login", async (req, res) => {
   }
   try {
     if(await bcrypt.compare(req.body.password, user.rows[0].password)){
-      
+      const accessToken = jwt.sign({id: user.rows[0].id}, "Yqqs8O4sr8auHlMnVbg2PAcTtB1lKLIh");
+      res.json({ token: accessToken });
     }
-    else return res.status(400).send('Wrong username or password');;
-    /*res.send(result.rows);*/
+    else return res.status(400).send('Wrong username or password');
   } catch (err) {
     console.error(err);
     res.status(500).send('Internal Server Error');

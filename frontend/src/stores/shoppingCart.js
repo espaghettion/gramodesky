@@ -1,26 +1,28 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useOrderStore } from './orderData';
+import { useUserStore } from './userData';
 
 export const useCartStore = defineStore('cartdata', () => {
   const items = ref([]);
-  const cost = ref(0);
+  const price = ref(0);
+
   const orders = useOrderStore();
+  const user = useUserStore();
 
   function addToCart(item){
     items.value.push(item);
-    let itemCost = 0;
+    let itemPrice = 0;
     for(let i = 0; i < items.value.length; i++){
-        itemCost += items.value[i].cost;
+        itemPrice += items.value[i].price;
     }
-    console.log(itemCost);
-    cost.value = itemCost;
+    price.value = itemPrice;
   }
 
   function createOrder(){
     const order = {
-      "user_id": 1,
-      "cost": cost.value,
+      "user_id": user.tokenUserId,
+      "price": price.value,
       "items": items.value
     }
     fetch("http://localhost:3000/orders", {
@@ -33,5 +35,5 @@ export const useCartStore = defineStore('cartdata', () => {
     })
   }
 
-  return { items, cost, addToCart, createOrder }
+  return { items, price, addToCart, createOrder }
 })

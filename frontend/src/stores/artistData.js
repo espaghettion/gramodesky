@@ -11,5 +11,43 @@ export const useArtistStore = defineStore('artistdata', () => {
       .catch(err => console.log(err.message))
   }
 
-  return { artists, loadArtists }
+  function addArtist(name){
+    const artist = {
+      "name": name
+    }
+    fetch("http://localhost:3000/artists", {
+      headers: {
+          "Content-Type": "application/json"
+      },
+      mode: "cors",
+      method: "POST",
+      body: JSON.stringify(artist)
+    })
+  }
+
+  function patchArtist(name, id){
+    const artist = {
+      "name": name
+    }
+    fetch("http://localhost:3000/artists/" + (id), {
+      headers: {
+          "Content-Type": "application/json"
+      },
+      mode: "cors",
+      method: "PATCH",
+      body: JSON.stringify(artist)
+    })
+  }
+
+  function deleteArtist(id){
+    fetch("http://localhost:3000/artists/" + (id), {
+      headers: {
+          "Content-Type": "application/json"
+      },
+      mode: "cors",
+      method: "DELETE",
+    })
+  }
+
+  return { artists, loadArtists, addArtist, patchArtist, deleteArtist }
 })

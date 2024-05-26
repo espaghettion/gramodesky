@@ -1,0 +1,58 @@
+@mixin flex-row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-column{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin button{
+    font-family: 'Lato', sans-serif;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: white;
+    color: green;
+    border: 3px solid green;
+    font-size: 1.2em;
+    transition: 0.3s ease all;
+
+    &:hover{
+        cursor: pointer;
+        color: white;
+        background-color: green;
+    }
+}
+
+@mixin responsive( $breakpoint ) {
+    @if $breakpoint == smartphone-portrait {
+        @media only screen and ( max-width: 575.98px ) {
+            @content;
+        }
+    }
+    @if $breakpoint == smartphone-landscape {
+        @media only screen and ( min-width: 575.99px ) and ( max-width: 767.99px ) {
+            @content;
+        }
+    }
+    @if $breakpoint == tablet {
+        @media only screen and ( min-width: 767.99px ) and ( max-width: 1199.97px ) {
+            @content;
+        }
+    }
+    @if $breakpoint == laptop {
+        @media only screen and ( min-width: 1199.98px  ) and ( max-width: 1399.98px ) {
+            @content;
+        }
+    }
+    @if $breakpoint == desktop {
+        @media only screen and ( min-width: 1399.99px ) {
+            @content;
+        }
+    }
+}
