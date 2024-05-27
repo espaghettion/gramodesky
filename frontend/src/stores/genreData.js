@@ -3,11 +3,19 @@ import { defineStore } from 'pinia'
 
 export const useGenreStore = defineStore('genredata', () => {
   const genres = ref([]);
+  const genre = ref(null);
 
   function loadGenres(){
     fetch('http://localhost:3000/genres')
       .then(response => response.json())
       .then(data => genres.value = data)
+      .catch(err => console.log(err.message))
+  }
+
+  function loadGenre(id){
+    fetch('http://localhost:3000/genres/' + (id))
+      .then(response => response.json())
+      .then(data => genre.value = data)
       .catch(err => console.log(err.message))
   }
 
@@ -49,5 +57,5 @@ export const useGenreStore = defineStore('genredata', () => {
     })
   }
 
-  return { genres, loadGenres, addGenre, patchGenre, deleteGenre }
+  return { genres, genre, loadGenres, loadGenre, addGenre, patchGenre, deleteGenre }
 })

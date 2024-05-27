@@ -16,6 +16,8 @@
 </template>
 
 <style scoped lang="scss">
+  @import '../mixins.scss';
+
   main{
     width: 100%;
     display: flex;
@@ -23,15 +25,6 @@
   }
 
   a{
-    width: 100px;
-    height: 100px;
-    padding: 50px;
-    margin: 10px;
-    background-color: green;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    color: black;
+    @include block;
   }
 </style>

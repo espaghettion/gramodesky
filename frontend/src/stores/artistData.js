@@ -3,11 +3,19 @@ import { defineStore } from 'pinia'
 
 export const useArtistStore = defineStore('artistdata', () => {
   const artists = ref([]);
+  const artist = ref(null);
 
   function loadArtists(){
     fetch('http://localhost:3000/artists')
       .then(response => response.json())
       .then(data => artists.value = data)
+      .catch(err => console.log(err.message))
+  }
+
+  function loadArtist(id){
+    fetch('http://localhost:3000/artists/' + (id))
+      .then(response => response.json())
+      .then(data => artist.value = data)
       .catch(err => console.log(err.message))
   }
 
@@ -49,5 +57,5 @@ export const useArtistStore = defineStore('artistdata', () => {
     })
   }
 
-  return { artists, loadArtists, addArtist, patchArtist, deleteArtist }
+  return { artists, artist, loadArtists, loadArtist, addArtist, patchArtist, deleteArtist }
 })

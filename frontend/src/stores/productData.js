@@ -19,6 +19,20 @@ export const useProductStore = defineStore('productdata', () => {
       .catch(err => console.log(err.message))
   }
 
+  function loadGenreProducts(id){
+    fetch('http://localhost:3000/genres/' + (id) + '/products')
+      .then(response => response.json())
+      .then(data => products.value = data)
+      .catch(err => console.log(err.message))
+  }
+
+  function loadArtistProducts(id){
+    fetch('http://localhost:3000/artists/' + (id) + '/products')
+      .then(response => response.json())
+      .then(data => products.value = data)
+      .catch(err => console.log(err.message))
+  }
+
   async function addProduct(name, artists, genres, available, price, type, image){
     const product = {
       "name": name,
@@ -40,14 +54,15 @@ export const useProductStore = defineStore('productdata', () => {
       method: "POST",
       body: JSON.stringify(product)
     }).then((a) => a.json())
-    await fetch("http://localhost:3000/products/" + response.id + "/image",  {
+
+    /*await fetch("http://localhost:3000/products/" + response.id + "/image",  {
       headers: {
           "Content-Type": "multipart/form-data"
       },
       mode: "cors",
       method: "PATCH",
       body: file
-    })
+    })*/
   }
 
   function patchProduct(name, available, price, id){
@@ -77,5 +92,5 @@ export const useProductStore = defineStore('productdata', () => {
   }
 
 
-  return { products, product, loadProducts, loadProduct, addProduct, patchProduct, deleteProduct }
+  return { products, product, loadProducts, loadProduct, loadGenreProducts, loadArtistProducts, addProduct, patchProduct, deleteProduct }
 })

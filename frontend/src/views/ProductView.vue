@@ -15,7 +15,7 @@
 
 <template>
     <div v-if="productData.product">
-        <h1>{{ productData.product.name }}</h1>
+        <h2>{{ productData.product.name }}</h2>
         <p>{{ productData.product.price }}Kč</p>
         <button @click="shoppingCart.addToCart(productData.product)">Přidat do košíku</button>
     </div>

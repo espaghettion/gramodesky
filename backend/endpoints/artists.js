@@ -18,7 +18,7 @@ router.get("/:id", async (req, res) => {
     try {
       const sql = `SELECT * FROM "artist" WHERE "id" = $1 AND "deleted" = false;`;
       const result = await client.query(sql, [ req.params.id ]);
-      res.json(result.rows);
+      res.json(result.rows[0]);
     } catch (err) {
       console.error(err);
       res.status(500).send('Internal Server Error');
@@ -28,7 +28,7 @@ router.get("/:id", async (req, res) => {
 
 router.get("/:id/products", async (req, res) => {
     try {
-      const sql = `SELECT "product" FROM "artist" JOIN "product" ON "artist"."id" = "product"."artist_id" WHERE "artist"."id" = $1 AND "artist"."deleted" = false;`;
+      const sql = `SELECT * FROM "product" JOIN "product_artists" ON "product"."id" = "product_artists"."product_id" WHERE "product_artists"."artist_id" = $1;`;
       const result = await client.query(sql, [ req.params.id ]);
       res.json(result.rows);
     } catch (err) {

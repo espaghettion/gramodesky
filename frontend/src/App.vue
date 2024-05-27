@@ -1,9 +1,5 @@
 <script setup>
   import { RouterLink, RouterView } from 'vue-router'
-
-  function reloadPage(){
-    window.location.reload();
-  }
 </script>
 
 <template>
@@ -18,13 +14,13 @@
         </article>
         <article>
           <RouterLink class="link" to="/user"><i class="fa-regular fa-user"></i></RouterLink>
-          <RouterLink class="link" to="/"><i class="fa-regular fa-heart"></i></RouterLink>
+          <RouterLink class="link" to="/favorites"><i class="fa-regular fa-heart"></i></RouterLink>
           <RouterLink class="link" to="/cart"><i class="fa-solid fa-cart-shopping"></i></RouterLink>
         </article>
       </section>
       <section>
         <ul id="categories">
-          <li><RouterLink class="link" to="/albums">ALBA</RouterLink></li>
+          <li><RouterLink class="link" to="/">ALBA</RouterLink></li>
           <li><RouterLink class="link" to="/artists">INTERPRETI</RouterLink></li>
           <li><RouterLink class="link" to="/genres">ŽÁNRY</RouterLink></li>
         </ul>

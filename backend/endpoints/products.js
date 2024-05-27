@@ -5,7 +5,7 @@ import client from "../express.js";
 
   router.get('/', async (req, res) => {
     try {
-      const result = await client.query(`SELECT * FROM "product WHERE "deleted" = false;`);
+      const result = await client.query(`SELECT * FROM "product" WHERE "deleted" = false;`);
       res.json(result.rows);
     } catch (err) {
       console.error(err);
