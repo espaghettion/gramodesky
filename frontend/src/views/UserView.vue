@@ -16,7 +16,7 @@
 </script>
 
 <template>
-  <div>
+  <main>
     <article v-if="!userStore.isLoggedIn">
       <section class="login">
         <h2>Přihlášení</h2>
@@ -57,7 +57,7 @@
         <button @click="userStore.logout()">Odhlásit</button>
       </section>
     </article>
-  </div>
+  </main>
 </template>
 
 <style lang="scss" scoped>

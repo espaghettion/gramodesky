@@ -19,6 +19,13 @@ export const useGenreStore = defineStore('genredata', () => {
       .catch(err => console.log(err.message))
   }
 
+  function loadProductGenres(id){
+    fetch('http://localhost:3000/products/' + (id) + '/genres')
+      .then(response => response.json())
+      .then(data => genres.value = data)
+      .catch(err => console.log(err.message))
+  }
+
   function addGenre(name){
     const genre = {
       "name": name
@@ -57,5 +64,5 @@ export const useGenreStore = defineStore('genredata', () => {
     })
   }
 
-  return { genres, genre, loadGenres, loadGenre, addGenre, patchGenre, deleteGenre }
+  return { genres, genre, loadGenres, loadGenre, loadProductGenres, addGenre, patchGenre, deleteGenre }
 })

@@ -28,7 +28,7 @@ router.get("/:id", async (req, res) => {
 
 router.get("/:id/products", async (req, res) => {
     try {
-      const sql = `SELECT * FROM "product" JOIN "product_genres" ON "product"."id" = "product_genres"."product_id" WHERE "product_genres"."genre_id" = $1;`;
+      const sql = `SELECT * FROM "product" JOIN "product_genres" ON "product"."id" = "product_genres"."product_id" WHERE "product_genres"."genre_id" = $1 AND "product"."deleted" = false;`;
       const result = await client.query(sql, [ req.params.id ]);
       res.json(result.rows);
     } catch (err) {

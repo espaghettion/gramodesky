@@ -23,7 +23,11 @@
                 <label for="artist-name">Jméno</label>
                 <input v-model="name" type="text" name="artist-name" id="artist-name" placeholder="Jméno umělce">
             </article>
-            <button @click="artistStore.addArtist(name)">Přidat</button>
+            <article class="property">
+                <label for="type">Obrázek</label>
+                <input @change="(val) => image = val.target.files" type="file" name="image" id="image">
+            </article>
+            <button @click="artistStore.addArtist(name, image[0])">Přidat</button>
         </section>
         <section>
             <h4>Upravit umělce</h4>

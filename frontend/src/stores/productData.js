@@ -54,15 +54,14 @@ export const useProductStore = defineStore('productdata', () => {
       method: "POST",
       body: JSON.stringify(product)
     }).then((a) => a.json())
-
-    /*await fetch("http://localhost:3000/products/" + response.id + "/image",  {
+    
+    await fetch("http://localhost:3000/products/" + response.id + "/image",  {
       headers: {
-          "Content-Type": "multipart/form-data"
       },
       mode: "cors",
       method: "PATCH",
       body: file
-    })*/
+    })
   }
 
   function patchProduct(name, available, price, id){

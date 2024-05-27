@@ -25,6 +25,28 @@ import client from "../express.js";
     }
   });
 
+  router.get("/:id/artists", async (req, res) => {
+    try {
+      const sql = `SELECT * FROM "artist" JOIN "product_artists" ON "artist"."id" = "product_artists"."artist_id" WHERE "product_artists"."product_id" = $1 AND "artist"."deleted" = false;`;
+      const result = await client.query(sql, [ req.params.id ]);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
+  router.get("/:id/genres", async (req, res) => {
+    try {
+      const sql = `SELECT * FROM "genre" JOIN "product_genres" ON "genre"."id" = "product_genres"."genre_id" WHERE "product_genres"."product_id" = $1 AND "genre"."deleted" = false;`;
+      const result = await client.query(sql, [ req.params.id ]);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
 
   router.post("/", async (req, res) => {
     try {
@@ -61,8 +83,7 @@ import client from "../express.js";
   router.patch("/:id/image", async (req, res) => {
     try {
       const imageName = `product${req.params.id}image.png`;
-      console.log(req.files);
-      req.files.file.mv('../uploads/' + imageName);
+      req.files.file.mv('./uploads/' + imageName);
       const sql = `UPDATE "product" SET "image" = $1::text WHERE "id" = $2`;
       const result = await client.query(sql, [ imageName, req.params.id ]);
       res.send(result.rows);

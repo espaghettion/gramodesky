@@ -11,7 +11,7 @@
 
 <template>
     <main>
-        <RouterLink v-for="(artist, i) in artistData.artists" :key="i" :to="{name: 'artist', params: {id: artist.id}}">{{ artist.name }}</RouterLink>
+        <RouterLink v-for="(artist, i) in artistData.artists" :key="i" :to="{name: 'artist', params: {id: artist.id}}" :style="{ backgroundImage: `url('http://localhost:3000/uploads/${artist.image}')`}"></RouterLink>
     </main>
 </template>
 

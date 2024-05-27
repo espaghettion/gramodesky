@@ -19,17 +19,36 @@ export const useArtistStore = defineStore('artistdata', () => {
       .catch(err => console.log(err.message))
   }
 
-  function addArtist(name){
+  function loadProductArtists(id){
+    fetch('http://localhost:3000/products/' + (id) + '/artists')
+      .then(response => response.json())
+      .then(data => artists.value = data)
+      .catch(err => console.log(err.message))
+  }
+
+  async function addArtist(name, image){
     const artist = {
       "name": name
     }
-    fetch("http://localhost:3000/artists", {
+
+    const file = new FormData();
+    file.append("file", image);
+
+    const response = await fetch("http://localhost:3000/artists", {
       headers: {
           "Content-Type": "application/json"
       },
       mode: "cors",
       method: "POST",
       body: JSON.stringify(artist)
+    }).then((a) => a.json())
+
+    await fetch("http://localhost:3000/artists/" + response.id + "/image",  {
+      headers: {
+      },
+      mode: "cors",
+      method: "PATCH",
+      body: file
     })
   }
 
@@ -57,5 +76,5 @@ export const useArtistStore = defineStore('artistdata', () => {
     })
   }
 
-  return { artists, artist, loadArtists, loadArtist, addArtist, patchArtist, deleteArtist }
+  return { artists, artist, loadArtists, loadArtist, loadProductArtists, addArtist, patchArtist, deleteArtist }
 })
