@@ -23,6 +23,7 @@
     const available = ref(false);
     const price = ref();
     const type = ref();
+    const image = ref();
 
     const patchProductId = ref();
     const newName = ref("");
@@ -67,7 +68,11 @@
                     <option value="CD">CD</option>
                 </select>
             </article>
-            <button @click="productStore.addProduct(name, productArtists, productGenres, available, price, type)">Přidat</button>
+            <article class="property">
+                <label for="type">Obrázek</label>
+                <input @change="(val) => image = val.target.files" type="file" name="image" id="image">
+            </article>
+            <button @click="productStore.addProduct(name, productArtists, productGenres, available, price, type, image[0])">Přidat</button>
         </section>
         <section>
             <h4>Upravit produkt</h4>

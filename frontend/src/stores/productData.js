@@ -19,7 +19,7 @@ export const useProductStore = defineStore('productdata', () => {
       .catch(err => console.log(err.message))
   }
 
-  function addProduct(name, artists, genres, available, price, type){
+  async function addProduct(name, artists, genres, available, price, type, image){
     const product = {
       "name": name,
       "artists": artists,
@@ -28,13 +28,25 @@ export const useProductStore = defineStore('productdata', () => {
       "price": price,
       "type": type
     }
-    fetch("http://localhost:3000/products", {
+
+    const file = new FormData();
+    file.append("file", image);
+
+    const response = await fetch("http://localhost:3000/products", {
       headers: {
           "Content-Type": "application/json"
       },
       mode: "cors",
       method: "POST",
       body: JSON.stringify(product)
+    }).then((a) => a.json())
+    await fetch("http://localhost:3000/products/" + response.id + "/image",  {
+      headers: {
+          "Content-Type": "multipart/form-data"
+      },
+      mode: "cors",
+      method: "PATCH",
+      body: file
     })
   }
 
