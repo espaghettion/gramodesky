@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
-      const result = await client.query(`SELECT * FROM "order";`);
+      const result = await client.query(`SELECT * FROM "order" WHERE "deleted" = false;`);
       res.json(result.rows);
     } catch (err) {
       console.error(err);
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     try {
-      const sql = `SELECT * FROM "order" WHERE "order"."id" = $1;`;
+      const sql = `SELECT * FROM "order" WHERE "id" = $1 AND "deleted" = false;`;
       const result = await client.query(sql, [ req.params.id ]);
       res.json(result.rows);
     } catch (err) {
@@ -28,7 +28,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-      const createOrder = `INSERT INTO "order" ("user_id", "price", "state") VALUES ($1, $2, 'ordered') RETURNING id`;
+      const createOrder = `INSERT INTO "order" ("user_id", "price", "state", "deleted") VALUES ($1, $2, 'ordered', false) RETURNING id`;
       let result = await client.query(createOrder, [ req.body.user_id, req.body.price ]);
       const orderId = result.rows[0].id;
       for(let i = 0; i < req.body.items.length; i++){
@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
 
 router.patch("/:id", async (req, res) => {
     try {
-      const sql = `UPDATE "order" SET "state" = $1 WHERE "order"."id" = $2`;
+      const sql = `UPDATE "order" SET "state" = $1 WHERE "id" = $2`;
       const result = await client.query(sql, [ req.body.state, req.params.id ]);
       res.send(result.rows);
     } catch (err) {
@@ -57,7 +57,7 @@ router.patch("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
     try {
-      const sql = `DELETE FROM "order" WHERE "order"."id" = $1`;
+      const sql = `UPDATE "order" SET "deleted" = true WHERE "id" = $1`;
       const result = await client.query(sql, [ req.params.id ]);
       res.send(result.rows);
     } catch (err) {
