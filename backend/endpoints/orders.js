@@ -1,5 +1,6 @@
 import express from "express";
 import client from "../express.js";
+import authorize from "../middleware/oauth.js";
 
 const router = express.Router();
 
@@ -26,7 +27,7 @@ router.get("/:id", async (req, res) => {
   });
 
 
-router.post("/", async (req, res) => {
+router.post("/", authorize(), async (req, res) => {
     try {
       const createOrder = `INSERT INTO "order" ("user_id", "price", "state", "deleted") VALUES ($1, $2, 'ordered', false) RETURNING id`;
       let result = await client.query(createOrder, [ req.body.user_id, req.body.price ]);
@@ -43,7 +44,7 @@ router.post("/", async (req, res) => {
   });
 
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authorize(), async (req, res) => {
     try {
       const sql = `UPDATE "order" SET "state" = $1 WHERE "id" = $2`;
       const result = await client.query(sql, [ req.body.state, req.params.id ]);
@@ -55,7 +56,7 @@ router.patch("/:id", async (req, res) => {
   });
 
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authorize(), async (req, res) => {
     try {
       const sql = `UPDATE "order" SET "deleted" = true WHERE "id" = $1`;
       const result = await client.query(sql, [ req.params.id ]);

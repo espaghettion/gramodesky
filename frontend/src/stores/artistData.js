@@ -1,9 +1,13 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { useUserStore } from './userData';
 
 export const useArtistStore = defineStore('artistdata', () => {
   const artists = ref([]);
   const artist = ref(null);
+
+  const userData = useUserStore();
+  const token = userData.token;
 
   function loadArtists(){
     fetch('http://localhost:3000/artists')
@@ -36,7 +40,8 @@ export const useArtistStore = defineStore('artistdata', () => {
 
     const response = await fetch("http://localhost:3000/artists", {
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-Auth": token
       },
       mode: "cors",
       method: "POST",
@@ -45,6 +50,7 @@ export const useArtistStore = defineStore('artistdata', () => {
 
     await fetch("http://localhost:3000/artists/" + response.id + "/image",  {
       headers: {
+        "X-Auth": token
       },
       mode: "cors",
       method: "PATCH",
@@ -58,7 +64,8 @@ export const useArtistStore = defineStore('artistdata', () => {
     }
     fetch("http://localhost:3000/artists/" + (id), {
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-Auth": token
       },
       mode: "cors",
       method: "PATCH",
@@ -69,7 +76,8 @@ export const useArtistStore = defineStore('artistdata', () => {
   function deleteArtist(id){
     fetch("http://localhost:3000/artists/" + (id), {
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-Auth": token
       },
       mode: "cors",
       method: "DELETE",

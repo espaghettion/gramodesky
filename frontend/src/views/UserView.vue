@@ -42,7 +42,7 @@
         <UpdateProduct></UpdateProduct>
       </section>
       <section>
-        <h3>Umělci</h3>
+        <h3>Interpreti</h3>
         <UpdateArtist></UpdateArtist>
       </section>
       <section>

@@ -1,5 +1,6 @@
 import express from "express";
 import client from "../express.js";
+import authorize from "../middleware/oauth.js";
 
   const router = express.Router();
 
@@ -48,7 +49,7 @@ import client from "../express.js";
   });
 
 
-  router.post("/", async (req, res) => {
+  router.post("/", authorize(), async (req, res) => {
     try {
       const createProduct = `INSERT INTO "product" ("name", "available", "price", "type", "image", "deleted") VALUES ($1::text, $2, $3, $4, $5::text, false) RETURNING id`;
       let result = await client.query(createProduct, [ req.body.name, req.body.available, req.body.price, req.body.type, "" ]);
@@ -69,7 +70,7 @@ import client from "../express.js";
   });
 
 
-  router.patch("/:id", async (req, res) => {
+  router.patch("/:id", authorize(), async (req, res) => {
     try {
       const sql = `UPDATE "product" SET "name" = $1::text, "available" = $2, "price" = $3 WHERE "id" = $4 AND "deleted" = false`;
       const result = await client.query(sql, [ req.body.name, req.body.available, req.body.price, req.params.id ]);
@@ -80,7 +81,7 @@ import client from "../express.js";
     }
   });
 
-  router.patch("/:id/image", async (req, res) => {
+  router.patch("/:id/image", authorize(), async (req, res) => {
     try {
       const imageName = `product${req.params.id}image.png`;
       req.files.file.mv('./uploads/' + imageName);
@@ -94,7 +95,7 @@ import client from "../express.js";
   });
 
 
-  router.delete("/:id", async (req, res) => {
+  router.delete("/:id", authorize(), async (req, res) => {
     try {
       const sql = `UPDATE "product" SET "deleted" = true WHERE "id" = $1`;
       const result = await client.query(sql, [ req.params.id ]);

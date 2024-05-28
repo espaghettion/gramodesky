@@ -27,7 +27,7 @@ await client.connect();
 app.use(cors({
     origin: "*"
 }));
-app.use( fileUpload({
+app.use(fileUpload({
     useTempFiles: true,
     tempFileDir: path.join('./tmp'),
 }));

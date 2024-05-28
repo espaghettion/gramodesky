@@ -1,5 +1,6 @@
 import express from "express";
 import client from "../express.js";
+import authorize from "../middleware/oauth.js";
 
 const router = express.Router();
 
@@ -38,7 +39,8 @@ router.get("/:id/products", async (req, res) => {
   });
 
 
-router.post("/", async (req, res) => {
+router.post("/", authorize(), async (req, res) => {
+  const token = req.headers["Authorization"];
   const select = `SELECT "name" FROM "artist" WHERE "name" = $1::text AND "deleted" = false`
   if((await client.query(select, [ req.body.name ])).rows.length > 0){
     return res.status(400).send('Artist already exists');
@@ -55,7 +57,7 @@ router.post("/", async (req, res) => {
   });
 
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authorize(), async (req, res) => {
   const select = `SELECT "name" FROM "artist" WHERE "name" = $1::text AND "deleted" = false`
   if((await client.query(select, [ req.body.name ])).rows.length > 0){
     return res.status(400).send('Artist already exists');
@@ -70,7 +72,7 @@ router.patch("/:id", async (req, res) => {
     }
   });
 
-router.patch("/:id/image", async (req, res) => {
+router.patch("/:id/image", authorize(), async (req, res) => {
     try {
       const imageName = `artist${req.params.id}image.png`;
       req.files.file.mv('./uploads/' + imageName);
@@ -84,7 +86,7 @@ router.patch("/:id/image", async (req, res) => {
   });
 
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authorize(), async (req, res) => {
     try {
       const sql = `UPDATE "artist" SET "deleted" = true WHERE "id" = $1`;
       const result = await client.query(sql, [ req.params.id ]);

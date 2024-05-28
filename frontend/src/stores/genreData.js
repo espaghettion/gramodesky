@@ -1,9 +1,13 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { useUserStore } from './userData';
 
 export const useGenreStore = defineStore('genredata', () => {
   const genres = ref([]);
   const genre = ref(null);
+
+  const userData = useUserStore();
+  const token = userData.token;
 
   function loadGenres(){
     fetch('http://localhost:3000/genres')
@@ -32,7 +36,8 @@ export const useGenreStore = defineStore('genredata', () => {
     }
     fetch("http://localhost:3000/genres", {
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-Auth": token
       },
       mode: "cors",
       method: "POST",
@@ -46,7 +51,8 @@ export const useGenreStore = defineStore('genredata', () => {
     }
     fetch("http://localhost:3000/genres/" + (id), {
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-Auth": token
       },
       mode: "cors",
       method: "PATCH",
@@ -57,7 +63,8 @@ export const useGenreStore = defineStore('genredata', () => {
   function deleteGenre(id){
     fetch("http://localhost:3000/genres/" + (id), {
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-Auth": token
       },
       mode: "cors",
       method: "DELETE",

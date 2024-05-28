@@ -42,7 +42,7 @@
                 <input v-model="name" type="text" name="product-name" id="product-name" placeholder="Jméno produktu">
             </article>
             <article class="property">
-                <label for="artists">Umělci</label>
+                <label for="artists">Interpreti</label>
                 <select v-model="productArtists" name="artists" id="artists" multiple>
                     <option v-for="(artist, i) in artistStore.artists" :key="i" :value="artist.id">{{ artist.name }}</option>
                 </select>

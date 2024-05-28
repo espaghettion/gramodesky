@@ -1,5 +1,6 @@
 import express from "express";
 import client from "../express.js";
+import authorize from "../middleware/oauth.js";
 
 const router = express.Router();
 
@@ -38,7 +39,7 @@ router.get("/:id/products", async (req, res) => {
   });
 
 
-router.post("/", async (req, res) => {
+router.post("/", authorize(), async (req, res) => {
   const select = `SELECT "name" FROM "genre" WHERE "name" = $1::text`
   if((await client.query(select, [ req.body.name ])).rows.length > 0){
     return res.status(400).send('Genre already exists');
@@ -54,7 +55,7 @@ router.post("/", async (req, res) => {
   });
 
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authorize(), async (req, res) => {
   const select = `SELECT "name" FROM "genre" WHERE "name" = $1::text`
   if((await client.query(select, [ req.body.name ])).rows.length > 0){
     return res.status(400).send('Genre already exists');
@@ -70,7 +71,7 @@ router.patch("/:id", async (req, res) => {
   });
 
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authorize(), async (req, res) => {
     try {
       const sql = `UPDATE "genre" SET "deleted" = true WHERE "id" = $1`;
       const result = await client.query(sql, [ req.params.id ]);

@@ -1,9 +1,13 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { useUserStore } from './userData';
 
 export const useProductStore = defineStore('productdata', () => {
   const products = ref([]);
   const product = ref(null);
+
+  const userData = useUserStore();
+  const token = userData.token;
 
   function loadProducts(){
     fetch('http://localhost:3000/products')
@@ -48,7 +52,8 @@ export const useProductStore = defineStore('productdata', () => {
 
     const response = await fetch("http://localhost:3000/products", {
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-Auth": token
       },
       mode: "cors",
       method: "POST",
@@ -57,6 +62,7 @@ export const useProductStore = defineStore('productdata', () => {
     
     await fetch("http://localhost:3000/products/" + response.id + "/image",  {
       headers: {
+        "X-Auth": token
       },
       mode: "cors",
       method: "PATCH",
@@ -72,7 +78,8 @@ export const useProductStore = defineStore('productdata', () => {
     }
     fetch("http://localhost:3000/products/" + (id), {
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-Auth": token
       },
       mode: "cors",
       method: "PATCH",
@@ -83,7 +90,8 @@ export const useProductStore = defineStore('productdata', () => {
   function deleteProduct(id){
     fetch("http://localhost:3000/products/" + (id), {
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-Auth": token
       },
       mode: "cors",
       method: "DELETE"

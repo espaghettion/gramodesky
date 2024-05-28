@@ -1,8 +1,12 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { useUserStore } from './userData';
 
 export const useOrderStore = defineStore('orderdata', () => {
   const orders = ref([]);
+
+  const userData = useUserStore();
+  const token = userData.token;
 
   function loadOrders(){
     fetch('http://localhost:3000/orders')
@@ -17,7 +21,8 @@ export const useOrderStore = defineStore('orderdata', () => {
     }
     fetch("http://localhost:3000/orders/" + (id), {
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-Auth": token
       },
       mode: "cors",
       method: "PATCH",
@@ -28,7 +33,8 @@ export const useOrderStore = defineStore('orderdata', () => {
   function deleteOrder(id){
     fetch("http://localhost:3000/orders/" + (id), {
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-Auth": token
       },
       mode: "cors",
       method: "DELETE",

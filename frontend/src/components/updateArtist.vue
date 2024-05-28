@@ -18,10 +18,10 @@
 <template>
     <article>
         <section>
-            <h4>Přidat umělce</h4>
+            <h4>Přidat interpreta</h4>
             <article class="property">
                 <label for="artist-name">Jméno</label>
-                <input v-model="name" type="text" name="artist-name" id="artist-name" placeholder="Jméno umělce">
+                <input v-model="name" type="text" name="artist-name" id="artist-name" placeholder="Jméno interpreta">
             </article>
             <article class="property">
                 <label for="type">Obrázek</label>
@@ -30,7 +30,7 @@
             <button @click="artistStore.addArtist(name, image[0])">Přidat</button>
         </section>
         <section>
-            <h4>Upravit umělce</h4>
+            <h4>Upravit interpreta</h4>
             <article class="property">
                 <label for="artist-old-name">Jméno</label>
                 <select v-model="patchArtistId" name="artist-old-name" id="artist-old-name">
@@ -39,12 +39,12 @@
             </article>
             <article class="property">
                 <label for="artist-new-name">Nové jméno</label>
-                <input v-model="newName" type="text" name="artist-new-name" id="artist-new-name" placeholder="Jméno umělce">
+                <input v-model="newName" type="text" name="artist-new-name" id="artist-new-name" placeholder="Jméno interpreta">
             </article>
             <button @click="artistStore.patchArtist(newName, patchArtistId)">Upravit</button>
         </section>
         <section>
-            <h4>Smazat umělce</h4>
+            <h4>Smazat interpreta</h4>
             <article class="property">
                 <label for="artist-delete-name">Jméno</label>
                 <select v-model="deleteArtistId" name="artist-delete-name" id="artist-delete-name">

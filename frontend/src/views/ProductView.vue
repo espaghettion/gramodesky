@@ -25,9 +25,12 @@
             <img :src="'http://localhost:3000/uploads/' + productData.product.image" alt="">
         </article>
         <article>
-            <h2>{{ productData.product.name }}</h2>
+            <section class="headline">
+                <h2>{{ productData.product.name }}</h2>
+                <button class="favorite"></button>
+            </section>
             <section class="artists">
-                <p>Umělci:</p>
+                <p>Interpreti:</p>
                 <RouterLink  class="link" v-for="(artist, i) in artistData.artists" :key="i" :to="{name: 'artist', params: {id: artist.id}}">{{ artist.name }}</RouterLink>
             </section>
             <section class="genres">
@@ -50,6 +53,15 @@
 
     main{
         align-items: center;
+
+        .headline{
+            display: flex;
+            width: 100%;
+
+            .favorite{
+                justify-self: flex-end;
+            }
+        }
 
         >article{
             display: flex;
