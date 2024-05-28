@@ -45,8 +45,8 @@ router.post("/", authorize(), async (req, res) => {
     return res.status(400).send('Genre already exists');
   }
     try {
-      const sql = `INSERT INTO "genre" ("name", "deleted") VALUES ($1::text, false)`;
-      const result = await client.query(sql, [ req.body.name ]);
+      const sql = `INSERT INTO "genre" ("name", "description", "deleted") VALUES ($1::text, $2::text, false)`;
+      const result = await client.query(sql, [ req.body.name, req.body.description ]);
       res.send(result.rows);
     } catch (err) {
       console.error(err);
@@ -61,8 +61,8 @@ router.patch("/:id", authorize(), async (req, res) => {
     return res.status(400).send('Genre already exists');
   }
     try {
-      const sql = `UPDATE "genre" SET "name" = $1::text WHERE "id" = $2`;
-      const result = await client.query(sql, [ req.body.name, req.params.id ]);
+      const sql = `UPDATE "genre" SET "name" = $1::text, "description" = $2::text WHERE "id" = $3`;
+      const result = await client.query(sql, [ req.body.name, req.body.description, req.params.id ]);
       res.send(result.rows);
     } catch (err) {
       console.error(err);

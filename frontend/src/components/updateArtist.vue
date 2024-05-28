@@ -8,8 +8,10 @@
     const artists = artistStore.artists;
 
     const name = ref("");
+    const description = ref("");
 
     const newName = ref("");
+    const newDescription = ref("");
     const patchArtistId = ref();
 
     const deleteArtistId = ref();
@@ -24,10 +26,14 @@
                 <input v-model="name" type="text" name="artist-name" id="artist-name" placeholder="Jméno interpreta">
             </article>
             <article class="property">
+                <label for="artist-description">Popisek</label>
+                <textarea v-model="description" name="artist-description" id="artist-description" placeholder="Popisek interpreta"></textarea>
+            </article>
+            <article class="property">
                 <label for="type">Obrázek</label>
                 <input @change="(val) => image = val.target.files" type="file" name="image" id="image">
             </article>
-            <button @click="artistStore.addArtist(name, image[0])">Přidat</button>
+            <button @click="artistStore.addArtist(name, description, image[0])">Přidat</button>
         </section>
         <section>
             <h4>Upravit interpreta</h4>
@@ -41,7 +47,11 @@
                 <label for="artist-new-name">Nové jméno</label>
                 <input v-model="newName" type="text" name="artist-new-name" id="artist-new-name" placeholder="Jméno interpreta">
             </article>
-            <button @click="artistStore.patchArtist(newName, patchArtistId)">Upravit</button>
+            <article class="property">
+                <label for="artist-new-description">Nový popisek</label>
+                <textarea v-model="newDescription" name="artist-new-description" id="artist-new-description" placeholder="Popisek interpreta"></textarea>
+            </article>
+            <button @click="artistStore.patchArtist(newName, newDescription, patchArtistId)">Upravit</button>
         </section>
         <section>
             <h4>Smazat interpreta</h4>
@@ -78,11 +88,6 @@
 
             button{
                 @include button;
-            }
-
-            select, input{
-                box-sizing: border-box;
-                width: 100%;
             }
         }
     }

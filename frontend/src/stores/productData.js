@@ -37,11 +37,12 @@ export const useProductStore = defineStore('productdata', () => {
       .catch(err => console.log(err.message))
   }
 
-  async function addProduct(name, artists, genres, available, price, type, image){
+  async function addProduct(name, artists, genres, description, available, price, type, image){
     const product = {
       "name": name,
       "artists": artists,
       "genres": genres,
+      "description": description,
       "available": available,
       "price": price,
       "type": type
@@ -68,15 +69,18 @@ export const useProductStore = defineStore('productdata', () => {
       method: "PATCH",
       body: file
     })
+
+    loadProducts();
   }
 
-  function patchProduct(name, available, price, id){
+  async function patchProduct(name, description, available, price, id){
     const product = {
       "name": name,
+      "description": description,
       "available": available,
       "price": price
     }
-    fetch("http://localhost:3000/products/" + (id), {
+    await fetch("http://localhost:3000/products/" + (id), {
       headers: {
           "Content-Type": "application/json",
           "X-Auth": token
@@ -85,10 +89,12 @@ export const useProductStore = defineStore('productdata', () => {
       method: "PATCH",
       body: JSON.stringify(product)
     })
+
+    loadProducts();
   }
 
-  function deleteProduct(id){
-    fetch("http://localhost:3000/products/" + (id), {
+  async function deleteProduct(id){
+    await fetch("http://localhost:3000/products/" + (id), {
       headers: {
           "Content-Type": "application/json",
           "X-Auth": token
@@ -96,6 +102,8 @@ export const useProductStore = defineStore('productdata', () => {
       mode: "cors",
       method: "DELETE"
     })
+
+    loadProducts();
   }
 
 

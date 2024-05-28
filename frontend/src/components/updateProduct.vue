@@ -20,6 +20,7 @@
     const name = ref("");
     const productArtists = ref([]);
     const productGenres = ref([]);
+    const description = ref("");
     const available = ref(false);
     const price = ref();
     const type = ref();
@@ -27,6 +28,7 @@
 
     const patchProductId = ref();
     const newName = ref("");
+    const newDescription = ref("");
     const changeAvailable = ref(false);
     const newPrice = ref();
 
@@ -54,6 +56,10 @@
                 </select>
             </article>
             <article class="property">
+                <label for="product-description">Popisek</label>
+                <textarea v-model="description" name="product-description" id="product-description" placeholder="Popisek produktu"></textarea>
+            </article>
+            <article class="property">
                 <label for="available">Dostupný</label>
                 <input v-model="available" type="checkbox" name="available" id="available">
             </article>
@@ -72,7 +78,7 @@
                 <label for="type">Obrázek</label>
                 <input @change="(val) => image = val.target.files" type="file" name="image" id="image">
             </article>
-            <button @click="productStore.addProduct(name, productArtists, productGenres, available, price, type, image[0])">Přidat</button>
+            <button @click="productStore.addProduct(name, productArtists, productGenres, description, available, price, type, image[0])">Přidat</button>
         </section>
         <section>
             <h4>Upravit produkt</h4>
@@ -87,6 +93,10 @@
                 <input v-model="newName" type="text" name="product-new-name" id="product-new-name" placeholder="Jméno produktu">
             </article>
             <article class="property">
+                <label for="product-new-description">Nový popisek</label>
+                <textarea v-model="newDescription" name="product-new-description" id="product-new-description" placeholder="Popisek produktu"></textarea>
+            </article>
+            <article class="property">
                 <label for="change-available">Dostupný</label>
                 <input v-model="changeAvailable" type="checkbox" name="change-available" id="change-available">
             </article>
@@ -94,7 +104,7 @@
                 <label for="new-price">Cena</label>
                 <input v-model="newPrice" type="number" name="new-price" id="new-price" placeholder="Cena produktu">
             </article>
-            <button @click="productStore.patchProduct(newName, changeAvailable, newPrice, patchProductId)">Upravit</button>
+            <button @click="productStore.patchProduct(newName, newDescription, changeAvailable, newPrice, patchProductId)">Upravit</button>
         </section>
         <section>
             <h4>Smazat produkt</h4>
@@ -131,11 +141,6 @@
 
             button{
                 @include button;
-            }
-
-            select, input{
-                box-sizing: border-box;
-                width: 100%;
             }
         }
     }

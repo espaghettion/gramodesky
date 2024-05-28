@@ -30,9 +30,10 @@ export const useArtistStore = defineStore('artistdata', () => {
       .catch(err => console.log(err.message))
   }
 
-  async function addArtist(name, image){
+  async function addArtist(name, description, image){
     const artist = {
-      "name": name
+      "name": name,
+      "description": description
     }
 
     const file = new FormData();
@@ -56,13 +57,16 @@ export const useArtistStore = defineStore('artistdata', () => {
       method: "PATCH",
       body: file
     })
+
+    loadArtists();
   }
 
-  function patchArtist(name, id){
+  async function patchArtist(name, description, id){
     const artist = {
-      "name": name
+      "name": name,
+      "description": description
     }
-    fetch("http://localhost:3000/artists/" + (id), {
+    await fetch("http://localhost:3000/artists/" + (id), {
       headers: {
           "Content-Type": "application/json",
           "X-Auth": token
@@ -71,10 +75,12 @@ export const useArtistStore = defineStore('artistdata', () => {
       method: "PATCH",
       body: JSON.stringify(artist)
     })
+
+    loadArtists();
   }
 
-  function deleteArtist(id){
-    fetch("http://localhost:3000/artists/" + (id), {
+  async function deleteArtist(id){
+    await fetch("http://localhost:3000/artists/" + (id), {
       headers: {
           "Content-Type": "application/json",
           "X-Auth": token
@@ -82,6 +88,8 @@ export const useArtistStore = defineStore('artistdata', () => {
       mode: "cors",
       method: "DELETE",
     })
+
+    loadArtists();
   }
 
   return { artists, artist, loadArtists, loadArtist, loadProductArtists, addArtist, patchArtist, deleteArtist }

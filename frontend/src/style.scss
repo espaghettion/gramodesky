@@ -45,10 +45,16 @@
     padding: 10px;
   }
 
-  input, select{
+  input, select, textarea{
+    width: 100%;
+    box-sizing: border-box;
     border: 3px solid green;
     font-family: 'Lato', sans-serif;
     padding: 10px;
+  }
+
+  textarea{
+    max-width: 100%;
   }
 
   header{

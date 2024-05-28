@@ -30,11 +30,12 @@ export const useGenreStore = defineStore('genredata', () => {
       .catch(err => console.log(err.message))
   }
 
-  function addGenre(name){
+  async function addGenre(name, description){
     const genre = {
-      "name": name
+      "name": name,
+      "description": description
     }
-    fetch("http://localhost:3000/genres", {
+    await fetch("http://localhost:3000/genres", {
       headers: {
           "Content-Type": "application/json",
           "X-Auth": token
@@ -43,13 +44,16 @@ export const useGenreStore = defineStore('genredata', () => {
       method: "POST",
       body: JSON.stringify(genre)
     })
+
+    loadGenres();
   }
 
-  function patchGenre(name, id){
+  async function patchGenre(name, description, id){
     const genre = {
-      "name": name
+      "name": name,
+      "description": description
     }
-    fetch("http://localhost:3000/genres/" + (id), {
+    await fetch("http://localhost:3000/genres/" + (id), {
       headers: {
           "Content-Type": "application/json",
           "X-Auth": token
@@ -58,10 +62,12 @@ export const useGenreStore = defineStore('genredata', () => {
       method: "PATCH",
       body: JSON.stringify(genre)
     })
+
+    loadGenres();
   }
 
-  function deleteGenre(id){
-    fetch("http://localhost:3000/genres/" + (id), {
+  async function deleteGenre(id){
+    await fetch("http://localhost:3000/genres/" + (id), {
       headers: {
           "Content-Type": "application/json",
           "X-Auth": token
@@ -69,6 +75,8 @@ export const useGenreStore = defineStore('genredata', () => {
       mode: "cors",
       method: "DELETE",
     })
+
+    loadGenres();
   }
 
   return { genres, genre, loadGenres, loadGenre, loadProductGenres, addGenre, patchGenre, deleteGenre }

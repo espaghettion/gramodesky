@@ -8,8 +8,10 @@
     const genres = genreStore.genres;
 
     const name = ref("");
+    const description = ref("");
 
     const newName = ref("");
+    const newDescription = ("");
     const patchGenreId = ref();
 
     const deleteGenreId = ref();
@@ -23,7 +25,11 @@
                 <label for="genre-name">Jméno</label>
                 <input v-model="name" type="text" name="genre-name" id="genre-name" placeholder="Jméno žánru">
             </article>
-            <button @click="genreStore.addGenre(name)">Přidat</button>
+            <article class="property">
+                <label for="genre-description">Popisek</label>
+                <textarea v-model="description" type="text" name="genre-description" id="genre-description" placeholder="Popisek žánru"></textarea>
+            </article>
+            <button @click="genreStore.addGenre(name, description)">Přidat</button>
         </section>
         <section>
             <h4>Upravit žánr</h4>
@@ -37,7 +43,11 @@
                 <label for="genre-new-name">Nové jméno</label>
                 <input v-model="newName" type="text" name="genre-new-name" id="genre-new-name" placeholder="Jméno žánru">
             </article>
-            <button @click="genreStore.patchGenre(newName, patchGenreId)">Upravit</button>
+            <article class="property">
+                <label for="genre-new-description">Nový popisek</label>
+                <textarea v-model="newDescription" type="text" name="genre-new-description" id="genre-new-description" placeholder="Popisek žánru"></textarea>
+            </article>
+            <button @click="genreStore.patchGenre(newName, newDescription, patchGenreId)">Upravit</button>
         </section>
         <section>
             <h4>Smazat žánr</h4>
@@ -74,11 +84,6 @@
 
             button{
                 @include button;
-            }
-
-            select, input{
-                box-sizing: border-box;
-                width: 100%;
             }
         }
     }

@@ -46,8 +46,8 @@ router.post("/", authorize(), async (req, res) => {
     return res.status(400).send('Artist already exists');
   }
     try {
-      const sql = `INSERT INTO "artist" ("name", "image", "deleted") VALUES ($1::text, $2::text, false) RETURNING id`;
-      const result = await client.query(sql, [ req.body.name, "" ]);
+      const sql = `INSERT INTO "artist" ("name", "description", "image", "deleted") VALUES ($1::text, $2::text, $3::text, false) RETURNING id`;
+      const result = await client.query(sql, [ req.body.name, req.body.description, "" ]);
       const artistId = result.rows[0].id;
       res.json({id: artistId});
     } catch (err) {
@@ -63,8 +63,8 @@ router.patch("/:id", authorize(), async (req, res) => {
     return res.status(400).send('Artist already exists');
   }
     try {
-      const sql = `UPDATE "artist" SET "name" = $1::text WHERE "id" = $2`;
-      const result = await client.query(sql, [ req.body.name, req.params.id ]);
+      const sql = `UPDATE "artist" SET "name" = $1::text, "description" = $2::text WHERE "id" = $3`;
+      const result = await client.query(sql, [ req.body.name, req.body.description, req.params.id ]);
       res.send(result.rows);
     } catch (err) {
       console.error(err);
