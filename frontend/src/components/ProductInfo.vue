@@ -1,33 +1,33 @@
 <script setup>
     import { useCartStore } from '../stores/shoppingCart'
-    import ProductInfo from '../components/ProductInfo.vue'
 
     const shoppingCart = useCartStore();
 </script>
 
 <template>
-    <main>
-        <h2>Váš košík:</h2>
-        <ProductInfo></ProductInfo>
-        <h4>Celkem: {{ shoppingCart.price }}Kč</h4>
-        <button @click="shoppingCart.createOrder()">Vytvořit objednávku</button>
-    </main>
+    <div>
+        <article v-for="(item, i) in shoppingCart.items" :key="i">
+            <section>
+                <img :src="'http://localhost:3000/uploads/' + item.image" alt="">
+            </section>
+            <section class="info">
+                <p>{{ item.name }} - {{ item.type }}</p>
+                <p>{{ item.price }} Kč</p>
+            </section>
+        </article>
+    </div>
 </template>
 
-<style scoped lang="scss">
-    @import '../mixins.scss';
-
-    main{
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 20px;
+<style lang="scss" scoped>
+        div{
+            width: 50%;
+        }
 
         article{
             display: flex;
             border: 3px solid green;
             padding: 5px;
-            width: 50%;
+            width: 100%;
             align-items: center;
 
             img{
@@ -49,9 +49,4 @@
 
 
         }
-    }
-
-    button{
-        @include button;
-    }
 </style>

@@ -1,12 +1,22 @@
 import express from "express";
 import client from "../express.js";
-import authorize from "../middleware/oauth.js";
+import {authorize} from "../middleware/oauth.js";
 
   const router = express.Router();
 
   router.get('/', async (req, res) => {
     try {
-      const result = await client.query(`SELECT * FROM "product" WHERE "deleted" = false;`);
+      const result = await client.query(`
+      SELECT DISTINCT "product".* FROM "product" 
+      JOIN "product_artists" 
+      ON "product"."id" = "product_artists"."product_id" 
+      JOIN "artist" 
+      ON "product_artists"."artist_id" = "artist"."id"
+      JOIN "product_genres"
+      ON "product"."id" = "product_genres"."product_id"
+      JOIN "genre"
+      ON "product_genres"."genre_id" = "genre"."id"
+      WHERE "product"."deleted" = false AND "artist"."deleted" = false AND "genre"."deleted" = false;`);
       res.json(result.rows);
     } catch (err) {
       console.error(err);
@@ -17,7 +27,17 @@ import authorize from "../middleware/oauth.js";
 
   router.get("/:id", async (req, res) => {
     try {
-      const sql = `SELECT * FROM "product" WHERE "id" = $1 AND "deleted" = false;`;
+      const sql = `
+      SELECT "product".* FROM "product" 
+      JOIN "product_artists" 
+      ON "product"."id" = "product_artists"."product_id" 
+      JOIN "artist" 
+      ON "product_artists"."artist_id" = "artist"."id"
+      JOIN "product_genres"
+      ON "product"."id" = "product_genres"."product_id"
+      JOIN "genre"
+      ON "product_genres"."genre_id" = "genre"."id"
+      WHERE "product"."deleted" = false AND "artist"."deleted" = false AND "genre"."deleted" = false AND "product"."id" = $1;`;
       const result = await client.query(sql, [ req.params.id ]);
       res.json(result.rows[0]);
     } catch (err) {

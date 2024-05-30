@@ -30,9 +30,26 @@ router.get("/:id", async (req, res) => {
 
 router.get("/:id/orders", async (req, res) => {
     try {
-      const sql = `SELECT "order" FROM "user" JOIN "order" ON "user"."id" = "order"."user_id" WHERE "user"."id" = $1;`;
-      const result = await client.query(sql, [ req.params.id ]);
-      res.json(result.rows);
+      const selectOrders = `SELECT "order".*
+      FROM "order"
+      WHERE "order"."user_id" = $1 AND "order"."deleted" = false;`;
+      const selectProducts = `SELECT "product".*, "order_items"."order_id"
+      FROM "order_items"
+      JOIN "product"
+      ON "order_items"."product_id" = "product"."id"
+      WHERE "order_items"."order_id" IN (SELECT "order"."id" FROM "order" WHERE "order"."user_id" = $1 AND "order"."deleted" = false);`;
+
+      const userOrders = (await client.query(selectOrders, [ req.params.id ])).rows;
+      const products = (await client.query(selectProducts, [ req.params.id ])).rows;
+
+      const orderProducts = userOrders.map(order => {
+        return{
+          ...order,
+          products: products.filter(product => product.order_id == order.id)
+        }
+      })
+      
+      res.json(orderProducts);
     } catch (err) {
       console.error(err);
       res.status(500).send('Internal Server Error');

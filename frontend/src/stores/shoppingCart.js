@@ -10,6 +10,8 @@ export const useCartStore = defineStore('cartdata', () => {
   const orders = useOrderStore();
   const user = useUserStore();
 
+  const token = user.token;
+
   function addToCart(item){
     items.value.push(item);
     let itemPrice = 0;
@@ -19,21 +21,25 @@ export const useCartStore = defineStore('cartdata', () => {
     price.value = itemPrice;
   }
 
-  function createOrder(){
+  async function createOrder(){
     const order = {
       "user_id": user.tokenUserId,
       "price": price.value,
       "items": items.value
     }
-    fetch("http://localhost:3000/orders", {
+    await fetch("http://localhost:3000/orders", {
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-Auth": token
       },
       mode: "cors",
       method: "POST",
       body: JSON.stringify(order)
     })
+
+    items.value = [];
+    price.value = 0;
   }
 
   return { items, price, addToCart, createOrder }
-})
+}, {persist: { storage: localStorage }})

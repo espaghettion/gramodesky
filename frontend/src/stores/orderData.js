@@ -15,6 +15,13 @@ export const useOrderStore = defineStore('orderdata', () => {
       .catch(err => console.log(err.message))
   }
 
+  function loadUserOrders(id){
+    fetch('http://localhost:3000/users/' + (id) + '/orders')
+      .then(response => response.json())
+      .then(data => orders.value = data)
+      .catch(err => console.log(err.message))
+  }
+
   function patchOrder(state, id){
     const order = {
       "state": state
@@ -41,5 +48,5 @@ export const useOrderStore = defineStore('orderdata', () => {
     })
   }
 
-  return { orders, loadOrders, patchOrder, deleteOrder }
+  return { orders, loadOrders, loadUserOrders, patchOrder, deleteOrder }
 })

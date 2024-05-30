@@ -14,7 +14,6 @@
         </article>
         <article>
           <RouterLink class="link" to="/user"><i class="fa-regular fa-user"></i></RouterLink>
-          <RouterLink class="link" to="/favorites"><i class="fa-regular fa-heart"></i></RouterLink>
           <RouterLink class="link" to="/cart"><i class="fa-solid fa-cart-shopping"></i></RouterLink>
         </article>
       </section>

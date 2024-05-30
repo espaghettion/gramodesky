@@ -43,6 +43,13 @@
         color: white;
         background-color: green;
     }
+
+    &:disabled{
+        color: gray;
+        border: 3px solid gray;
+        background-color: white;
+        cursor: not-allowed;
+    }
 }
 
 @mixin responsive( $breakpoint ) {

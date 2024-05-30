@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const authorize = () => {
+export const authorize = () => {
     return(req, res, next) => {
         const token = req.headers["x-auth"];
 
@@ -22,11 +22,29 @@ const authorize = () => {
             res.send({message: "blud NENI admin"})
             return;
         }
-    
-        console.log("blud ma prava");
 
         next();
     }
 }
 
-export default authorize;
+export const authorizeUser = () => {
+    return(req, res, next) => {
+        const token = req.headers["x-auth"];
+
+        if(!token) {
+            res.send({message:"blud nema token"});
+            return;
+        }
+    
+        try {
+            const ttt = jwt.verify(token, "Yqqs8O4sr8auHlMnVbg2PAcTtB1lKLIh");
+        
+            req.authentication = ttt.id;
+        } catch(e) {
+            res.send({message:"blud ma mid token"});
+            return;
+        }
+
+        next();
+    }
+}

@@ -8,7 +8,6 @@ import GenresView from '@/views/GenresView.vue'
 import GenreView from '@/views/GenreView.vue'
 import ArtistsView from '@/views/ArtistsView.vue'
 import ArtistView from '@/views/ArtistView.vue'
-import FavoritesView from '@/views/FavoritesView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,11 +56,6 @@ const router = createRouter({
       path: '/genres',
       name: 'genres',
       component: GenresView
-    },
-    {
-      path: '/favorites',
-      name: 'favorites',
-      component: FavoritesView
     }
   ]
 })

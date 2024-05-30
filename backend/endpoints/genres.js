@@ -1,6 +1,6 @@
 import express from "express";
 import client from "../express.js";
-import authorize from "../middleware/oauth.js";
+import {authorize} from "../middleware/oauth.js";
 
 const router = express.Router();
 
@@ -29,7 +29,17 @@ router.get("/:id", async (req, res) => {
 
 router.get("/:id/products", async (req, res) => {
     try {
-      const sql = `SELECT * FROM "product" JOIN "product_genres" ON "product"."id" = "product_genres"."product_id" WHERE "product_genres"."genre_id" = $1 AND "product"."deleted" = false;`;
+      const sql = `
+      SELECT DISTINCT "product".* FROM "product" 
+      JOIN "product_artists" 
+      ON "product"."id" = "product_artists"."product_id" 
+      JOIN "artist" 
+      ON "product_artists"."artist_id" = "artist"."id"
+      JOIN "product_genres"
+      ON "product"."id" = "product_genres"."product_id"
+      JOIN "genre"
+      ON "product_genres"."genre_id" = "genre"."id"
+      WHERE "product"."deleted" = false AND "artist"."deleted" = false AND "genre"."deleted" = false AND "genre"."id" = $1;`;
       const result = await client.query(sql, [ req.params.id ]);
       res.json(result.rows);
     } catch (err) {

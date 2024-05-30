@@ -24,10 +24,12 @@
         <article class="image">
             <img :src="'http://localhost:3000/uploads/' + productData.product.image" alt="">
         </article>
-        <article>
-            <section class="headline">
+        <article class="info">
+            <section class="description">
                 <h2>{{ productData.product.name }}</h2>
-                <button class="favorite"></button>
+            </section>
+            <section class="description">
+                <p>{{ productData.product.description }}</p>
             </section>
             <section class="artists">
                 <p>Interpreti:</p>
@@ -43,7 +45,11 @@
             <section>
                 <p>{{ productData.product.price }} Kč</p>
             </section>
-            <button @click="shoppingCart.addToCart(productData.product)">Přidat do košíku</button>
+            <section>
+                <p v-if="productData.product.available" class="available">Dostupné</p>
+                <p v-else class="unavailable">Nedostupné</p>
+            </section>
+            <button :disabled="!productData.product.available" @click="shoppingCart.addToCart(productData.product)">Přidat do košíku</button>
         </article>
     </main>
 </template>
@@ -54,15 +60,6 @@
     main{
         align-items: center;
 
-        .headline{
-            display: flex;
-            width: 100%;
-
-            .favorite{
-                justify-self: flex-end;
-            }
-        }
-
         >article{
             display: flex;
             flex-direction: column;
@@ -71,6 +68,44 @@
             box-sizing: border-box;
             gap: 20px;
             padding: 20px;
+
+            &.info{
+                .description{
+                    display: flex;
+                    justify-content: space-between;
+                    width: 80%;
+
+                    p{
+                        font-size: 0.9em;
+                        color: rgb(80, 80, 80);
+                    }
+                }
+
+                .favorite{
+                    border: none;
+                    font-size: 2em;
+                    background-color: rgb(235, 255, 235);
+
+                    &:hover{
+                        background-color: rgb(235, 255, 235);
+                        color: green;
+                    }
+                }
+
+                .available{
+                    background-color: green;
+                    font-weight: 600;
+                    color: white;
+                    padding: 10px;
+                }
+
+                .unavailable{
+                    background-color: red;
+                    font-weight: 600;
+                    color: white;
+                    padding: 10px;
+                }
+            }
 
             &.image{
                 align-items: center;
@@ -86,6 +121,7 @@
     }
 
     h2{
+        font-size: 2.5em;
         padding: 0;
     }
 
