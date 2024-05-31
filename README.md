@@ -13,4 +13,6 @@ The frontend of this project was created in HTML with the help of the Vue framew
 The backend was created with the help of the Express framework, sending SQL queries to retrieve data from the database. Multiple middlewares were used as well, mainly body-parser for parsing retrieved data and express-fileupload for the ability to upload images.
 
 ## Setup
-To run the project locally, install all the dependencies necessary with ```npm install```, then first run the Express server with ```npm run dev``` and then run the Vue project with ```npm run dev```
+To run the project locally, install all the dependencies necessary with ```npm install```, then first run the Express server with ```npm run dev``` and then run the Vue project with ```npm run dev```.
+
+To login as administrator and edit the database data, use the username "admin" and password "admin".
