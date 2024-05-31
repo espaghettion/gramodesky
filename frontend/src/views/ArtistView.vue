@@ -40,7 +40,18 @@
         width: 100%;
         display: flex;
         flex-direction: row;
-        align-items: center;
+
+        @include responsive(smartphone-portrait){
+            flex-direction: column;
+        }
+
+        @include responsive(smartphone-landscape){
+            flex-direction: column;
+        }
+
+        @include responsive(tablet){
+            flex-direction: column;
+        }
 
         >article{
             width: 50%;
@@ -50,16 +61,71 @@
             align-items: center;
             justify-content: start;
 
+            @include responsive(smartphone-portrait){
+                width: 100%;
+            }
+
+            @include responsive(smartphone-landscape){
+                width: 100%;
+            }
+
+            @include responsive(tablet){
+                width: 100%;
+            }
+
             >section{
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: flex-start;
                 padding: 30px;
+
+                @include responsive(smartphone-portrait){
+                    width: 100%;
+                    padding: 0;
+                    padding-top: 30px;
+                    padding-bottom: 30px;
+
+                    h2{
+                        font-size: 2em;
+                    }
+                }
+
+                @include responsive(smartphone-landscape){
+                    width: 100%;
+                    padding: 0;
+                    padding-top: 30px;
+                    padding-bottom: 30px;
+                }
+
+                @include responsive(tablet){
+                    width: 100%;
+                    padding: 0;
+                    padding-top: 30px;
+                    padding-bottom: 30px;
+                }
+            }
+
+            .products{
+                img{
+                    width: 35px;
+                }
             }
 
             .info{
                 width: 60%;
+
+                @include responsive(smartphone-portrait){
+                    width: 90%;
+                }
+
+                @include responsive(smartphone-landscape){
+                    width: 80%;
+                }
+                
+                @include responsive(tablet){
+                    width: 80%;
+                }
                 
                 p{
                     text-align: justify;
@@ -71,6 +137,18 @@
                 img{
                     width: 100%;
                     padding-bottom: 20px;
+
+                    @include responsive(smartphone-portrait){
+                        width: 60%;
+                    }
+
+                    @include responsive(smartphone-landscape){
+                        width: 60%;
+                    }
+                    
+                    @include responsive(tablet){
+                        width: 60%;
+                    }
                 }
             }
         }

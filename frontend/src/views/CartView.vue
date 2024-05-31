@@ -19,36 +19,8 @@
 
     main{
         flex-direction: column;
-        justify-content: flex-start;
         align-items: center;
         gap: 20px;
-
-        article{
-            display: flex;
-            border: 3px solid green;
-            padding: 5px;
-            width: 50%;
-            align-items: center;
-
-            img{
-                width: 100px;
-            }
-
-            .info{
-                display: flex;
-                justify-content: space-between;
-                width: 100%;
-                padding: 20px;
-
-                p{
-                    font-size: 1.2em;
-                    color: green;
-                    font-weight: 600;
-                }
-            }
-
-
-        }
     }
 
     button{

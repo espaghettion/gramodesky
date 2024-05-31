@@ -19,8 +19,26 @@
 </template>
 
 <style lang="scss" scoped>
+        @import '../mixins.scss';
+
         div{
             width: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+
+            @include responsive(smartphone-portrait){
+                width: 90%;
+            }
+
+            @include responsive(smartphone-landscape){
+                width: 80%;
+            }
+
+            @include responsive(tablet){
+                width: 70%;
+            }
         }
 
         article{
@@ -39,6 +57,11 @@
                 justify-content: space-between;
                 width: 100%;
                 padding: 20px;
+
+                @include responsive(smartphone-portrait){
+                    flex-direction: column;
+                    gap: 10px;
+                }
 
                 p{
                     font-size: 1.2em;

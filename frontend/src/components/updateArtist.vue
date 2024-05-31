@@ -69,26 +69,5 @@
 <style lang="scss" scoped>
     @import '../mixins.scss';
     
-    article{
-        @include flex-row;
-        align-items: start;
-        gap: 10%;
-
-        >section{
-            @include flex-column;
-            width: 20%;
-            padding: 20px;
-            gap: 20px;
-
-            .property{
-                width: 100%;
-                @include flex-column;
-                gap: 5px;
-            }
-
-            button{
-                @include button;
-            }
-        }
-    }
+    @include form;
 </style>

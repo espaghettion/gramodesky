@@ -52,6 +52,53 @@
     }
 }
 
+@mixin form{
+    article{
+        @include flex-row;
+        align-items: flex-start;
+        gap: 10%;
+
+        @include responsive(smartphone-portrait){
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @include responsive(smartphone-landscape){
+            flex-direction: column;
+            align-items: center;
+        }
+
+        >section{
+            @include flex-column;
+            width: 20%;
+            padding: 20px;
+            gap: 20px;
+
+            @include responsive(smartphone-portrait){
+                flex-direction: column;
+                width: 80%;
+                align-items: center;
+            }
+
+            @include responsive(smartphone-landscape){
+                flex-direction: column;
+                width: 80%;
+                align-items: center;
+            }
+
+            .property{
+                width: 100%;
+                @include flex-column;
+                gap: 5px;
+            }
+
+            button{
+                @include button;
+            }
+        }
+    }
+}
+
 @mixin responsive( $breakpoint ) {
     @if $breakpoint == smartphone-portrait {
         @media only screen and ( max-width: 575.98px ) {

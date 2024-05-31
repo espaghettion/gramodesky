@@ -18,6 +18,8 @@
   div{
     display: flex;
     width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   a{
@@ -26,5 +28,10 @@
       position: relative;
       background-size: contain;
       text-align: center;
+
+      @include responsive(smartphone-portrait){
+        width: 40px;
+        height: 40px;
+      }
   }
 </style>

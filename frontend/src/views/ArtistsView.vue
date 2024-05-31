@@ -26,7 +26,6 @@
     @import '../mixins.scss';
 
     main{
-        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -39,6 +38,7 @@
 
         .artists{
             width: 100%;
+            height: 100%;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -51,5 +51,10 @@
         position: relative;
         background-size: contain;
         text-align: center;
+
+        @include responsive(smartphone-portrait){
+          width: 40px;
+          height: 40px;
+        }
     }
 </style>

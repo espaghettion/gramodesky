@@ -39,7 +39,18 @@
         width: 100%;
         display: flex;
         flex-direction: row;
-        align-items: center;
+
+        @include responsive(smartphone-portrait){
+            flex-direction: column;
+        }
+
+        @include responsive(smartphone-landscape){
+            flex-direction: column;
+        }
+
+        @include responsive(tablet){
+            flex-direction: column;
+        }
 
         >article{
             width: 50%;
@@ -47,14 +58,44 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: start;
+
+            @include responsive(smartphone-portrait){
+                width: 100%;
+            }
+
+            @include responsive(smartphone-landscape){
+                width: 100%;
+            }
+
+            @include responsive(tablet){
+                width: 100%;
+            }
 
             >section{
                 display: flex;
                 flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
                 padding: 30px;
+
+                @include responsive(smartphone-portrait){
+                    width: 100%;
+                    padding: 0;
+                    padding-top: 30px;
+                    padding-bottom: 30px;
+                }
+
+                @include responsive(smartphone-landscape){
+                    width: 90%;
+                    padding: 0;
+                    padding-top: 30px;
+                    padding-bottom: 30px;
+                }
+
+                @include responsive(tablet){
+                    width: 90%;
+                    padding: 0;
+                    padding-top: 30px;
+                    padding-bottom: 30px;
+                }
             }
 
             .info{
@@ -62,6 +103,18 @@
                 display: flex;
                 flex-direction: column;
                 gap: 20px;
+
+                @include responsive(smartphone-portrait){
+                    width: 90%;
+                }
+
+                @include responsive(smartphone-landscape){
+                    width: 80%;
+                }
+                
+                @include responsive(tablet){
+                    width: 80%;
+                }
                 
                 p{
                     text-align: justify;

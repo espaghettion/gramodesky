@@ -98,8 +98,6 @@
   @import '../mixins.scss';
   article{
     width: 100%;
-    @include flex-row;
-    align-items: start;
 
     &.user{
       flex-direction: column;
@@ -118,6 +116,23 @@
         border: 5px solid green;
         padding: 20px;
 
+        @include responsive(smartphone-portrait){
+          width: 85%;
+          border: 3px solid green;
+          font-size: 0.8em;
+        }
+
+        @include responsive(smartphone-landscape){
+          width: 80%;
+          border: 3px solid green;
+          font-size: 0.9em;
+        }
+
+        @include responsive(tablet){
+          width: 80%;
+          border: 3px solid green;
+        }
+
         .info{
           display: flex;
           width: 100%;
@@ -125,6 +140,11 @@
           font-size: 1.2em;
           font-weight: 600;
           color: green;
+
+          @include responsive(smartphone-portrait){
+            flex-direction: column;
+            gap: 5px;
+          }
         }
 
         .product{
@@ -148,6 +168,11 @@
                     font-size: 1em;
                     color: green;
                     font-weight: 600;
+                }
+
+                @include responsive(smartphone-portrait){
+                  flex-direction: column;
+                  gap: 5px;
                 }
             }
         }

@@ -53,5 +53,12 @@
             color: white;
             background-color: green;
         }
+
+        @include responsive(smartphone-portrait){
+            border: 3px solid green;
+            width: 30px;
+            height: 30px;
+            font-size: 1.3em;
+        }
     }
 </style>

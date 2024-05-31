@@ -58,16 +58,46 @@
     @import '../mixins.scss';
 
     main{
-        align-items: center;
+        @include responsive(smartphone-portrait){
+            flex-direction: column;
+
+            h2{
+                font-size: 2em;
+            }
+        }
+
+        @include responsive(smartphone-landscape){
+            flex-direction: column;
+        }
+
+        @include responsive(tablet){
+            flex-direction: column;
+        }
 
         >article{
             display: flex;
             flex-direction: column;
-            align-items: start;
+            align-items: flex-start;
             width: 50%;
             box-sizing: border-box;
             gap: 20px;
             padding: 20px;
+
+            @include responsive(smartphone-portrait){
+                width: 100%;
+                align-items: center;
+            }
+
+            @include responsive(smartphone-landscape){
+                width: 100%;
+                align-items: center;
+            }
+
+            @include responsive(tablet){
+                width: 100%;
+                align-items: center;
+            }
+            
 
             &.info{
                 .description{
@@ -132,7 +162,12 @@
     .artists, .genres{
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         gap: 20px;
+
+        @include responsive(smartphone-portrait){
+            font-size: 0.8em;
+        }
     }
 
     button{
