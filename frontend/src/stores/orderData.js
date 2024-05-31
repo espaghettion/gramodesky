@@ -9,14 +9,26 @@ export const useOrderStore = defineStore('orderdata', () => {
   const token = userData.token;
 
   function loadOrders(){
-    fetch('http://localhost:3000/orders')
+    fetch('http://localhost:3000/orders', {
+      headers: {
+          "X-Auth": token
+      },
+      mode: "cors",
+      method: "GET"
+    })
       .then(response => response.json())
       .then(data => orders.value = data)
       .catch(err => console.log(err.message))
   }
 
   function loadUserOrders(id){
-    fetch('http://localhost:3000/users/' + (id) + '/orders')
+    fetch('http://localhost:3000/users/' + (id) + '/orders', {
+      headers: {
+          "X-Auth": token
+      },
+      mode: "cors",
+      method: "GET"
+    })
       .then(response => response.json())
       .then(data => orders.value = data)
       .catch(err => console.log(err.message))

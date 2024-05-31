@@ -2,10 +2,11 @@ import express from "express";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import client from "../express.js";
+import { authorize, authorizeUser } from "../middleware/oauth.js";
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', authorize(), async (req, res) => {
     try {
       const result = await client.query(`SELECT * FROM "user";`);
       res.json(result.rows);
@@ -16,7 +17,7 @@ router.get('/', async (req, res) => {
   });
 
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", authorize(), async (req, res) => {
     try {
       const sql = `SELECT * FROM "user" WHERE "user"."id" = $1;`;
       const result = await client.query(sql, [ req.params.id ]);
@@ -28,7 +29,7 @@ router.get("/:id", async (req, res) => {
   });
 
 
-router.get("/:id/orders", async (req, res) => {
+router.get("/:id/orders", authorizeUser(), async (req, res) => {
     try {
       const selectOrders = `SELECT "order".*
       FROM "order"
@@ -93,7 +94,7 @@ router.post("/login", async (req, res) => {
 });
 
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authorize(), async (req, res) => {
   try {
     const sql = `UPDATE "user" SET "username" = $1::text WHERE "user"."id" = $2`;
     const result = await client.query(sql, [ req.body.username, req.params.id ]);
@@ -105,7 +106,7 @@ router.patch("/:id", async (req, res) => {
 });
 
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authorize(), async (req, res) => {
   try {
     const sql = `DELETE FROM "user" WHERE "user"."id" = $1`;
     const result = await client.query(sql, [ req.params.id ]);

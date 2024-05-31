@@ -4,9 +4,9 @@ import { authorize, authorizeUser } from "../middleware/oauth.js";
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', authorize(), async (req, res) => {
     try {
-      const result = await client.query(`SELECT * FROM "order" WHERE "deleted" = false;`);
+      const result = await client.query(`SELECT "order".* FROM "order" WHERE "deleted" = false;`);
       res.json(result.rows);
     } catch (err) {
       console.error(err);
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
   });
 
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", authorize(), async (req, res) => {
     try {
       const sql = `SELECT * FROM "order" WHERE "id" = $1 AND "deleted" = false;`;
       const result = await client.query(sql, [ req.params.id ]);

@@ -19,11 +19,17 @@
     const password = ref("");
 
     watch(() => userStore.tokenUserId, (() => {
-      orderData.loadUserOrders(userStore.tokenUserId);
+      if(userStore.tokenUserId !== 1){
+        orderData.loadUserOrders(userStore.tokenUserId);
+      }
+      else orderData.loadOrders();
     }))
 
     onMounted(() => {
-      orderData.loadUserOrders(userStore.tokenUserId);
+      if(userStore.tokenUserId !== 1){
+        orderData.loadUserOrders(userStore.tokenUserId);
+      }
+      else orderData.loadOrders();
     })
 </script>
 
