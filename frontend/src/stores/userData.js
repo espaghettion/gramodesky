@@ -5,14 +5,12 @@ import jwt from 'jsonwebtoken';
 export const useUserStore = defineStore('userdata', () => {
   const users = ref([]);
 
-
   let token = ref(localStorage.getItem("token"));
   const tokenUserId = computed(() => {
-    console.log(jwt.decode(token.value));
     if(token.value === undefined || token.value === null){
       return -1;
     }
-    else return jwt.decode(token.value).id;
+    else {console.log(jwt.decode(token.value).id); return jwt.decode(token.value).id;}
   })
 
   watch(token, () => {

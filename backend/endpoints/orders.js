@@ -26,24 +26,6 @@ router.get("/:id", async (req, res) => {
     }
   });
 
-  router.get("/:id/products", async (req, res) => {
-    try {
-      const sql = `SELECT "product".*
-      FROM "product" 
-      JOIN "order_items" 
-      ON "product"."id" = "order_items"."product_id" 
-      JOIN "order"
-      ON "order"."id" = "order_items"."order_id"
-      WHERE "order"."id" = $1 AND "order"."deleted" = false;
-      GROUP BY "order"."id"`;
-      const result = await client.query(sql, [ req.params.id ]);
-      res.json(result.rows);
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-    }
-  });
-
 
 router.post("/", authorizeUser(), async (req, res) => {
     try {

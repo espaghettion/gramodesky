@@ -37,13 +37,6 @@ export const useProductStore = defineStore('productdata', () => {
       .catch(err => console.log(err.message))
   }
 
-  function loadOrderProducts(id){
-    fetch('http://localhost:3000/orders/' + (id) + '/products')
-      .then(response => response.json())
-      .then(data => products.value = data)
-      .catch(err => console.log(err.message))
-  }
-
   async function addProduct(name, artists, genres, description, available, price, type, image){
     const product = {
       "name": name,
@@ -114,5 +107,5 @@ export const useProductStore = defineStore('productdata', () => {
   }
 
 
-  return { products, product, loadProducts, loadProduct, loadGenreProducts, loadArtistProducts, loadOrderProducts, addProduct, patchProduct, deleteProduct }
+  return { products, product, loadProducts, loadProduct, loadGenreProducts, loadArtistProducts, addProduct, patchProduct, deleteProduct }
 })
